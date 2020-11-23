@@ -11,12 +11,7 @@ export default class CreateTools1605795853594 implements MigrationInterface {
             type: 'varchar',
             isPrimary: true,
             generationStrategy: 'uuid',
-          },
-          {
-            name: 'user_id',
-            type: 'varchar',
-            isPrimary: true,
-            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'title',

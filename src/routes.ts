@@ -1,12 +1,8 @@
 import { Router } from 'express';
-import ToolController from './controller/ToolController';
-
-const toolController = new ToolController();
+import toolsRouter from './routes/tools.routes';
 
 const routes = Router();
 
-routes.post('/', toolController.create);
-routes.get('/', toolController.index);
-routes.delete('/:id', toolController.delete);
+routes.use('/tools', toolsRouter);
 
 export default routes;
