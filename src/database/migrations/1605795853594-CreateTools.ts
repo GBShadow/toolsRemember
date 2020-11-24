@@ -16,22 +16,24 @@ export default class CreateTools1605795853594 implements MigrationInterface {
           {
             name: 'title',
             type: 'varchar',
-            isNullable: false,
           },
           {
             name: 'link',
             type: 'varchar',
-            isNullable: false,
           },
           {
             name: 'description',
             type: 'varchar',
-            isNullable: false,
           },
           {
-            name: 'tag',
-            type: 'varchar',
-            isNullable: false,
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
           },
         ],
       }),
