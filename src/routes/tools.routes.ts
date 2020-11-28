@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 
 import ToolsRepository from '../repositories/ToolsRepository';
 import CreateToolService from '../services/CreateToolService';
+import DeleteToolService from '../services/DeleteToolService';
 
 const toolsRouter = Router();
 
@@ -15,7 +16,7 @@ toolsRouter.get('/', async (req, res) => {
 
 toolsRouter.post('/', async (req, res) => {
   try {
-    const { title, link, description, tag } = req.body;
+    const { title, link, description, tag, user_id } = req.body;
 
     const createTool = new CreateToolService();
 
@@ -24,13 +25,27 @@ toolsRouter.post('/', async (req, res) => {
       link,
       description,
       tag,
+      user_id,
     });
 
     return res.json(tool);
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
-  return res.json();
+});
+
+toolsRouter.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleteTool = new DeleteToolService();
+
+    await deleteTool.execute(id);
+
+    return res.status(204).send();
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
 });
 
 export default toolsRouter;

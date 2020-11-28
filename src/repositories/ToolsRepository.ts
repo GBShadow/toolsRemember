@@ -1,8 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Tool from '../model/Tool';
+import Tool from '../models/Tool';
 
 @EntityRepository(Tool)
-class ToolRepository extends Repository<Tool> {
+class ToolsRepository extends Repository<Tool> {
   public async findByTag(tag: string): Promise<Tool[] | null> {
     const findTools = await this.find({
       where: { tag },
@@ -12,4 +12,4 @@ class ToolRepository extends Repository<Tool> {
   }
 }
 
-export default ToolRepository;
+export default ToolsRepository;

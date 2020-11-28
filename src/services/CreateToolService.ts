@@ -1,5 +1,6 @@
-import { getCustomRepository } from 'typeorm';
-import Tool from '../model/Tool';
+import { getCustomRepository, getRepository } from 'typeorm';
+import Tool from '../models/Tool';
+import Tag from '../models/Tag';
 import ToolRepository from '../repositories/ToolsRepository';
 
 interface Request {
@@ -7,6 +8,7 @@ interface Request {
   link: string;
   description: string;
   tag: string;
+  user_id: string;
 }
 
 class CreateToolService {
@@ -15,14 +17,31 @@ class CreateToolService {
     link,
     description,
     tag,
+    user_id,
   }: Request): Promise<Tool> {
     const toolRepository = getCustomRepository(ToolRepository);
+    const tagRepository = getRepository(Tag);
+
+    let toolTag = await tagRepository.findOne({
+      where: {
+        title: tag,
+      },
+    });
+
+    if (!toolTag) {
+      toolTag = tagRepository.create({
+        title: tag,
+      });
+
+      await tagRepository.save(toolTag);
+    }
 
     const tool = toolRepository.create({
       title,
       link,
       description,
-      tag,
+      tag: toolTag,
+      user_id,
     });
 
     await toolRepository.save(tool);

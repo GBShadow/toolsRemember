@@ -2,9 +2,14 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+import Tag from './Tag';
+import User from './User';
 
 @Entity('tools')
 class Tool {
@@ -20,8 +25,16 @@ class Tool {
   @Column()
   description: string;
 
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
   @Column()
   user_id: string;
+
+  @ManyToOne(() => Tag)
+  @JoinColumn({ name: 'tag_id' })
+  tag: Tag;
 
   @Column()
   tag_id: string;
