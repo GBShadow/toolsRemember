@@ -18,7 +18,7 @@ app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
     });
   }
 
-  console.log(err);
+  console.error(err);
 
   return res.status(500).json({
     status: 'error',
