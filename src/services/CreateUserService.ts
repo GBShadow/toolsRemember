@@ -1,6 +1,7 @@
-import { getCustomRepository } from 'typeorm';
+import AppError from '../errors/AppError';
 import User from '../models/User';
 import UsersRepository from '../repositories/UsersRepository';
+import IUsersRepository from '../dtos/IUsersRepository';
 
 interface Request {
   name: string;
@@ -9,16 +10,24 @@ interface Request {
 }
 
 class CreateUserService {
-  public async execute({ name, email, password }: Request): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository);
+  private usersRepository: IUsersRepository;
 
-    const user = usersRepository.create({
+  constructor() {
+    this.usersRepository = new UsersRepository();
+  }
+
+  public async execute({ name, email, password }: Request): Promise<User> {
+    const userAlreadyExist = await this.usersRepository.findByEmail(email);
+
+    if (userAlreadyExist) {
+      throw new AppError('User already exist');
+    }
+
+    const user = this.usersRepository.create({
       name,
       email,
       password,
     });
-
-    await usersRepository.save(user);
 
     return user;
   }

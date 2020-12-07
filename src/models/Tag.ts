@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
+import Tool from './Tool';
 
 @Entity('tags')
 class Tag {
@@ -13,6 +15,9 @@ class Tag {
 
   @Column()
   title: string;
+
+  @ManyToMany(() => Tool, tool => tool.tags)
+  tools: Tool[];
 
   @CreateDateColumn()
   created_at: Date;

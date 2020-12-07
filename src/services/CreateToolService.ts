@@ -1,50 +1,68 @@
-import { getCustomRepository, getRepository } from 'typeorm';
-import Tool from '../models/Tool';
-import Tag from '../models/Tag';
-import ToolRepository from '../repositories/ToolsRepository';
+import AppError from '../errors/AppError';
 
-interface Request {
+import Tool from '../models/Tool';
+
+import ToolsRepository from '../repositories/ToolsRepository';
+import UsersRepository from '../repositories/UsersRepository';
+import TagsRepository from '../repositories/TagsRepository';
+
+import IToolsRepository from '../dtos/IToolsRepository';
+import ITagsRepository from '../dtos/ITagsRepository';
+import IUsersRepository from '../dtos/IUsersRepository';
+
+interface IRequest {
+  user_id: string;
   title: string;
   link: string;
   description: string;
-  tag: string;
-  user_id: string;
+  tags: string[];
 }
 
 class CreateToolService {
+  private toolRepository: IToolsRepository;
+
+  private userRepository: IUsersRepository;
+
+  private tagRepository: ITagsRepository;
+
+  constructor() {
+    this.toolRepository = new ToolsRepository();
+
+    this.userRepository = new UsersRepository();
+
+    this.tagRepository = new TagsRepository();
+  }
+
   public async execute({
+    user_id,
     title,
     link,
     description,
-    tag,
-    user_id,
-  }: Request): Promise<Tool> {
-    const toolRepository = getCustomRepository(ToolRepository);
-    const tagRepository = getRepository(Tag);
+    tags,
+  }: IRequest): Promise<Tool> {
+    const user = await this.userRepository.findByTagId(user_id);
 
-    let toolTag = await tagRepository.findOne({
-      where: {
-        title: tag,
-      },
-    });
-
-    if (!toolTag) {
-      toolTag = tagRepository.create({
-        title: tag,
-      });
-
-      await tagRepository.save(toolTag);
+    if (!user) {
+      throw new AppError('User does not exist');
     }
 
-    const tool = toolRepository.create({
+    const alreadyExistTool = await this.toolRepository.findByTitle(title);
+
+    if (alreadyExistTool) {
+      throw new AppError('Tool already exist');
+    }
+
+    const savedTags = await this.tagRepository.create(tags);
+
+    const tagsId = savedTags.map(tag => tag.id);
+
+    const tool = await this.toolRepository.create({
+      user,
       title,
       link,
       description,
-      tag: toolTag,
-      user_id,
+      tools_tags: tagsId,
     });
-
-    await toolRepository.save(tool);
 
     return tool;
   }
