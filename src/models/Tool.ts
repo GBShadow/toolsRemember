@@ -34,13 +34,10 @@ class Tool {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column()
-  tags_id: string[];
-
   @ManyToMany(() => Tag, tag => tag.tools, {
     cascade: true,
   })
-  @JoinColumn({ name: 'tags_id' })
+  @JoinTable()
   tags: Tag[];
 
   @CreateDateColumn()
