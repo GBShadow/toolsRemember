@@ -1,23 +1,17 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
-import ToolsTags from './ToolsTags';
+import Tag from './Tag';
 
-@Entity('tags')
-class Tag {
+import User from './User';
+
+@Entity('tools_tags')
+class ToolTag {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column()
-  title: string;
-
-  @OneToMany(() => ToolsTags, tools_tags => tools_tags.tag)
-  tools_tags: ToolsTags[];
 
   @CreateDateColumn()
   created_at: Date;
@@ -26,4 +20,4 @@ class Tag {
   updated_at: Date;
 }
 
-export default Tag;
+export default ToolTag;

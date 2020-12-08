@@ -6,10 +6,9 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
+  OneToMany,
 } from 'typeorm';
-import Tag from './Tag';
+import ToolsTags from './ToolsTags';
 
 import User from './User';
 
@@ -34,11 +33,8 @@ class Tool {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToMany(() => Tag, tag => tag.tools, {
-    cascade: true,
-  })
-  @JoinTable()
-  tags: Tag[];
+  @OneToMany(() => ToolsTags, tools_tags => tools_tags.tool)
+  tools_tags: ToolsTags[];
 
   @CreateDateColumn()
   created_at: Date;
