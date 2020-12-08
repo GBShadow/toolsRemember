@@ -53,6 +53,7 @@ class CreateToolService {
     }
 
     const savedTags = await this.tagRepository.create(tags);
+    console.log('savedTags', savedTags);
 
     const tool = await this.toolRepository.create({
       user,

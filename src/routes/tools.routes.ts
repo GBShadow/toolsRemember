@@ -16,7 +16,7 @@ toolsRouter.get('/', async (req, res) => {
 
 toolsRouter.post('/', async (req, res) => {
   try {
-    const { title, link, description, tag, user_id } = req.body;
+    const { title, link, description, tags, user_id } = req.body;
 
     const createTool = new CreateToolService();
 
@@ -24,7 +24,7 @@ toolsRouter.post('/', async (req, res) => {
       title,
       link,
       description,
-      tag,
+      tags,
       user_id,
     });
 
