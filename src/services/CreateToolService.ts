@@ -54,14 +54,12 @@ class CreateToolService {
 
     const savedTags = await this.tagRepository.create(tags);
 
-    const tagsId = savedTags.map(tag => tag.id);
-
     const tool = await this.toolRepository.create({
       user,
       title,
       link,
       description,
-      tools_tags: tagsId,
+      tags: savedTags,
     });
 
     return tool;

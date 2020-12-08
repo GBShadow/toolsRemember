@@ -19,7 +19,7 @@ class ToolsRepository implements IToolsRepository {
     tags,
   }: ICreateToolDTO): Promise<Tool> {
     const tool = this.ormRepositoty.create({
-      user_id: user,
+      user,
       title,
       link,
       description,

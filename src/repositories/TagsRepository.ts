@@ -15,10 +15,8 @@ class TagsRepository implements ITagsRepository {
   }
 
   public async create(tags: string[]): Promise<Tag[]> {
-    const savedTags = this.ormRepositoty.create(
-      tags.map(title => ({
-        title,
-      })),
+    const savedTags = tags.map((title: string) =>
+      this.ormRepositoty.create({ title }),
     );
 
     await this.ormRepositoty.save(savedTags);
