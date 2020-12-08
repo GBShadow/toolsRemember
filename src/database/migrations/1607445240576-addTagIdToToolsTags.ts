@@ -5,31 +5,33 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export default class AddTollIdTags1607356792676 implements MigrationInterface {
+export default class addTagIdToToolsTags1607445240576
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
-      'tags',
+      'tools_tags',
       new TableColumn({
-        name: 'tools_id',
+        name: 'tag_id',
         type: 'uuid',
+        isNullable: true,
       }),
     );
 
     await queryRunner.createForeignKey(
-      'tags',
+      'tools_tags',
       new TableForeignKey({
-        columnNames: ['tools_id'],
+        name: 'Tag_ToolsTags',
+        columnNames: ['tag_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'tools',
-        name: 'TagTool',
-        onUpdate: 'CASCADE',
+        referencedTableName: 'tags',
         onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('tags', 'TagTool');
-    await queryRunner.dropColumn('tags', 'tools_id');
+    await queryRunner.dropForeignKey('tools_tags', 'Tag_ToolsTags');
+    await queryRunner.dropColumn('tools_tags', 'tag_id');
   }
 }
