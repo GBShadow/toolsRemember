@@ -23,10 +23,26 @@ class ToolsRepository implements IToolsRepository {
       title,
       link,
       description,
-      tags,
+      tools_tags: tags,
     });
 
     await this.ormRepositoty.save(tool);
+
+    return tool;
+  }
+
+  public async findAll(): Promise<Tool[] | null> {
+    const tools = await this.ormRepositoty.find({
+      relations: ['tools_tags', 'user'],
+    });
+
+    return tools || null;
+  }
+
+  public async findById(id: string): Promise<Tool | undefined> {
+    const tool = await this.ormRepositoty.findOne(id, {
+      relations: ['tools_tags', 'user'],
+    });
 
     return tool;
   }

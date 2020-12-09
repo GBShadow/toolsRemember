@@ -10,6 +10,10 @@ import IToolsRepository from '../dtos/IToolsRepository';
 import ITagsRepository from '../dtos/ITagsRepository';
 import IUsersRepository from '../dtos/IUsersRepository';
 
+interface ITags {
+  title: string;
+}
+
 interface IRequest {
   user_id: string;
   title: string;
@@ -53,14 +57,17 @@ class CreateToolService {
     }
 
     const savedTags = await this.tagRepository.create(tags);
-    console.log('savedTags', savedTags);
+
+    const tagsId = savedTags.map(tag => ({
+      tag_id: tag.id,
+    }));
 
     const tool = await this.toolRepository.create({
       user,
       title,
       link,
       description,
-      tags: savedTags,
+      tags: tagsId,
     });
 
     return tool;

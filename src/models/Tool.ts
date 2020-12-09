@@ -33,7 +33,9 @@ class Tool {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToMany(() => ToolsTags, tools_tags => tools_tags.tool)
+  @OneToMany(() => ToolsTags, tools_tags => tools_tags.tool, {
+    cascade: true,
+  })
   tools_tags: ToolsTags[];
 
   @CreateDateColumn()
