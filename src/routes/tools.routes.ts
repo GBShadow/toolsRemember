@@ -1,17 +1,27 @@
 import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
 
-import ToolsRepository from '../repositories/ToolsRepository';
+import ListToolService from '../services/ListToolService';
+import FindToolService from '../services/FindToolService';
 import CreateToolService from '../services/CreateToolService';
 import DeleteToolService from '../services/DeleteToolService';
 
 const toolsRouter = Router();
 
 toolsRouter.get('/', async (req, res) => {
-  const toolsRepository = getCustomRepository(ToolsRepository);
-  const tools = await toolsRepository.find();
+  const listTools = new ListToolService();
+
+  const tools = await listTools.execute();
 
   return res.json(tools);
+});
+
+toolsRouter.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  const findTool = new FindToolService();
+
+  const tool = await findTool.execute({ id });
+
+  return res.json(tool);
 });
 
 toolsRouter.post('/', async (req, res) => {
