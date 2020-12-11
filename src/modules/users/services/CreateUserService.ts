@@ -1,4 +1,4 @@
-import AppError from '../../shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
 import UsersRepository from '../infra/typeorm/repositories/UsersRepository';
 import IUsersRepository from '../repositories/IUsersRepository';

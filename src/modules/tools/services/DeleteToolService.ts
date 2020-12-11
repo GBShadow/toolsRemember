@@ -1,4 +1,4 @@
-import AppError from '../../shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 import IToolsRepository from '../repositories/IToolsRepository';
 import ToolsRepository from '../infra/typeorm/repositories/ToolsRepository';
 

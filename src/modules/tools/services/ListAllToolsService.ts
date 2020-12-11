@@ -1,4 +1,4 @@
-import AppError from '../../shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 
 import Tool from '../infra/typeorm/entities/Tool';
 

@@ -1,6 +1,6 @@
 import { EntityRepository, Repository, getRepository } from 'typeorm';
+import IToolsRepository from '@modules/tools/repositories/IToolsRepository';
 import ICreateToolDTO from '../../../dtos/ICreateToolDTO';
-import IToolsRepository from '../../../repositories/IToolsRepository';
 import Tool from '../entities/Tool';
 
 @EntityRepository(Tool)

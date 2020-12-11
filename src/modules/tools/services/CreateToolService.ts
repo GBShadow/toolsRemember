@@ -1,18 +1,14 @@
-import AppError from '../../shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import Tool from '../infra/typeorm/entities/Tool';
 
 import ToolsRepository from '../infra/typeorm/repositories/ToolsRepository';
-import UsersRepository from '../../users/infra/typeorm/repositories/UsersRepository';
 import TagsRepository from '../infra/typeorm/repositories/TagsRepository';
 
 import IToolsRepository from '../repositories/IToolsRepository';
-import ITagsRepository from '../../../../src2/dtos/ITagsRepository';
-import IUsersRepository from '../../users/repositories/IUsersRepository';
-
-interface ITags {
-  title: string;
-}
+import ITagsRepository from '../repositories/ITagsRepository';
 
 interface IRequest {
   user_id: string;

@@ -1,4 +1,4 @@
-import Tag from '../models/Tag';
+import Tag from '../infra/typeorm/entities/Tag';
 
 interface IFindTags {
   id: string;

@@ -1,5 +1,5 @@
 import { EntityRepository, Repository, getRepository, In } from 'typeorm';
-import ITagsRepository from '../dtos/ITagsRepository';
+import ITagsRepository from '@modules/tools/repositories/ITagsRepository';
 import Tag from '../entities/Tag';
 
 interface IFindTags {
