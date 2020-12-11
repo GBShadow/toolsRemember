@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import express, { NextFunction, Request, Response } from 'express';
 import routes from './routes';
-import AppError from './errors/AppError';
+import AppError from '../../errors/AppError';
 
-import './database';
+import '../typeorm';
 
 const app = express();
 
@@ -26,6 +26,4 @@ app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
-});
+export default app;

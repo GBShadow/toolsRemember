@@ -1,5 +1,5 @@
-import User from '../models/User';
-import ICreateUserDTO from './ICreateUserDTO';
+import User from '../infra/typeorm/entities/User';
+import ICreateUserDTO from '../dtos/ICreateUserDTO';
 
 export default interface IToolsRepository {
   create(data: ICreateUserDTO): Promise<User>;

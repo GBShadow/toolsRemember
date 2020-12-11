@@ -7,10 +7,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  JoinTable,
 } from 'typeorm';
 import ToolsTags from './ToolsTags';
 
-import User from './User';
+import User from '../../../../users/infra/typeorm/entities/User';
 
 @Entity('tools')
 class Tool {

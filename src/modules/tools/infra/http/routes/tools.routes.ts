@@ -1,19 +1,20 @@
 import { Router } from 'express';
 
-import ListToolService from '../services/ListToolService';
+import ListAllToolsService from '../services/ListAllToolsService';
 import FindToolService from '../services/FindToolService';
+import FindToolsByTagService from '../services/FindToolsByTagService';
 import CreateToolService from '../services/CreateToolService';
 import DeleteToolService from '../services/DeleteToolService';
 
 const toolsRouter = Router();
 
-toolsRouter.get('/', async (req, res) => {
-  const listTools = new ListToolService();
+// toolsRouter.get('/', async (req, res) => {
+//   const listAllTools = new ListAllToolsService();
 
-  const tools = await listTools.execute();
+//   const tools = await listAllTools.execute();
 
-  return res.json(tools);
-});
+//   return res.json(tools);
+// });
 
 toolsRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
@@ -22,6 +23,17 @@ toolsRouter.get('/:id', async (req, res) => {
   const tool = await findTool.execute({ id });
 
   return res.json(tool);
+});
+
+toolsRouter.get('/', async (req, res) => {
+  const filter = req.query;
+  const tag = filter.tag as string;
+
+  const findToolByTag = new FindToolsByTagService();
+
+  const tools = await findToolByTag.execute({ tag });
+
+  return res.json(tools);
 });
 
 toolsRouter.post('/', async (req, res) => {

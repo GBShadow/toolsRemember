@@ -1,7 +1,7 @@
 import { EntityRepository, Repository, getRepository } from 'typeorm';
-import ICreateToolDTO from '../dtos/ICreateToolDTO';
-import IToolsRepository from '../dtos/IToolsRepository';
-import Tool from '../models/Tool';
+import ICreateToolDTO from '../../../dtos/ICreateToolDTO';
+import IToolsRepository from '../../../repositories/IToolsRepository';
+import Tool from '../entities/Tool';
 
 @EntityRepository(Tool)
 class ToolsRepository implements IToolsRepository {
@@ -33,7 +33,7 @@ class ToolsRepository implements IToolsRepository {
 
   public async findAll(): Promise<Tool[] | null> {
     const tools = await this.ormRepositoty.find({
-      relations: ['tools_tags', 'user'],
+      relations: ['tools_tags', 'tools_tags.tag', 'user'],
     });
 
     return tools || null;
@@ -41,7 +41,7 @@ class ToolsRepository implements IToolsRepository {
 
   public async findById(id: string): Promise<Tool | undefined> {
     const tool = await this.ormRepositoty.findOne(id, {
-      relations: ['tools_tags', 'user'],
+      relations: ['tools_tags', 'tools_tags.tag', 'user'],
     });
 
     return tool;
@@ -57,14 +57,21 @@ class ToolsRepository implements IToolsRepository {
     return tool;
   }
 
-  public async findAllByTagName(tag_id: string): Promise<Tool[] | null> {
-    const tags = await this.ormRepositoty.find({
-      where: {
-        tools_tags: tag_id,
-      },
+  public async findAllByTagName(tagTitle: string): Promise<Tool[] | null> {
+    const tools = await this.ormRepositoty.find({
+      relations: ['tools_tags', 'tools_tags.tag'],
     });
 
-    return tags || null;
+    const filteredTools = tools.filter(({ tools_tags }) => {
+      const tool = tools_tags.find(({ tag }) => tag.title === tagTitle);
+      return tool;
+    });
+
+    return filteredTools || null;
+  }
+
+  public async deleteTool(tool: Tool): Promise<void> {
+    await this.ormRepositoty.remove(tool);
   }
 }
 

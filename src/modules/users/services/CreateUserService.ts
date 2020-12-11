@@ -1,7 +1,7 @@
-import AppError from '../errors/AppError';
-import User from '../models/User';
-import UsersRepository from '../repositories/UsersRepository';
-import IUsersRepository from '../dtos/IUsersRepository';
+import AppError from '../../shared/errors/AppError';
+import User from '../infra/typeorm/entities/User';
+import UsersRepository from '../infra/typeorm/repositories/UsersRepository';
+import IUsersRepository from '../repositories/IUsersRepository';
 
 interface Request {
   name: string;

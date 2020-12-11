@@ -1,6 +1,6 @@
 import { EntityRepository, Repository, getRepository, In } from 'typeorm';
 import ITagsRepository from '../dtos/ITagsRepository';
-import Tag from '../models/Tag';
+import Tag from '../entities/Tag';
 
 interface IFindTags {
   id: string;

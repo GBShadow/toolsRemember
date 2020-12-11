@@ -1,9 +1,9 @@
-import AppError from '../errors/AppError';
+import AppError from '../../shared/errors/AppError';
 
-import Tool from '../models/Tool';
+import Tool from '../infra/typeorm/entities/Tool';
 
-import ToolsRepository from '../repositories/ToolsRepository';
-import IToolsRepository from '../dtos/IToolsRepository';
+import ToolsRepository from '../infra/typeorm/repositories/ToolsRepository';
+import IToolsRepository from '../repositories/IToolsRepository';
 
 interface IRequest {
   id: string;

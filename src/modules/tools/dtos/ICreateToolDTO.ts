@@ -1,4 +1,4 @@
-import User from '../models/User';
+import User from '../../users/infra/typeorm/entities/User';
 
 interface ITags {
   tag_id: string;

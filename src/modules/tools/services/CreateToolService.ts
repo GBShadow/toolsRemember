@@ -1,14 +1,14 @@
-import AppError from '../errors/AppError';
+import AppError from '../../shared/errors/AppError';
 
-import Tool from '../models/Tool';
+import Tool from '../infra/typeorm/entities/Tool';
 
-import ToolsRepository from '../repositories/ToolsRepository';
-import UsersRepository from '../repositories/UsersRepository';
-import TagsRepository from '../repositories/TagsRepository';
+import ToolsRepository from '../infra/typeorm/repositories/ToolsRepository';
+import UsersRepository from '../../users/infra/typeorm/repositories/UsersRepository';
+import TagsRepository from '../infra/typeorm/repositories/TagsRepository';
 
-import IToolsRepository from '../dtos/IToolsRepository';
-import ITagsRepository from '../dtos/ITagsRepository';
-import IUsersRepository from '../dtos/IUsersRepository';
+import IToolsRepository from '../repositories/IToolsRepository';
+import ITagsRepository from '../../../../src2/dtos/ITagsRepository';
+import IUsersRepository from '../../users/repositories/IUsersRepository';
 
 interface ITags {
   title: string;
