@@ -19,6 +19,10 @@ class FindToolService {
   public async execute({ id }: IRequest): Promise<Tool | undefined> {
     const tool = await this.toolRepository.findById(id);
 
+    if (!tool) {
+      throw new AppError('Tool does not exist.');
+    }
+
     return tool;
   }
 }

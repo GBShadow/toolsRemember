@@ -3,7 +3,7 @@ import ITagsRepository from '@modules/tools/repositories/ITagsRepository';
 import Tag from '../entities/Tag';
 
 interface IFindTags {
-  id: string;
+  title: string;
 }
 
 @EntityRepository(Tag)
@@ -24,12 +24,12 @@ class TagsRepository implements ITagsRepository {
     return savedTags;
   }
 
-  public async findAllById(tags: IFindTags[]): Promise<Tag[]> {
-    const tagsId = tags.map(tag => tag.id);
+  public async findAllByTitle(tags: IFindTags[]): Promise<Tag[]> {
+    const tagsTitle = tags.map(tag => tag.title);
 
     const existingTag = await this.ormRepositoty.find({
       where: {
-        id: In(tagsId),
+        title: In(tagsTitle),
       },
     });
 
