@@ -2,10 +2,6 @@ import { EntityRepository, Repository, getRepository, In } from 'typeorm';
 import ITagsRepository from '@modules/tools/repositories/ITagsRepository';
 import Tag from '../entities/Tag';
 
-interface IFindTags {
-  title: string;
-}
-
 @EntityRepository(Tag)
 class TagsRepository implements ITagsRepository {
   private ormRepositoty: Repository<Tag>;
@@ -24,12 +20,20 @@ class TagsRepository implements ITagsRepository {
     return savedTags;
   }
 
-  public async findAllByTitle(tags: IFindTags[]): Promise<Tag[]> {
-    const tagsTitle = tags.map(tag => tag.title);
+  public async findByTitle(tag: string): Promise<Tag | undefined> {
+    const existingTag = await this.ormRepositoty.findOne({
+      where: {
+        title: tag,
+      },
+    });
 
+    return existingTag;
+  }
+
+  public async findAllByTitle(tags: string[]): Promise<Tag[]> {
     const existingTag = await this.ormRepositoty.find({
       where: {
-        title: In(tagsTitle),
+        title: In(tags),
       },
     });
 

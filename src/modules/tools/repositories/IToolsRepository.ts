@@ -3,9 +3,9 @@ import ICreateToolDTO from '../dtos/ICreateToolDTO';
 
 export default interface IToolsRepository {
   create(data: ICreateToolDTO): Promise<Tool>;
-  findAll(): Promise<Tool[] | null>;
+  findAll(): Promise<Tool[]>;
   findById(data: string): Promise<Tool | undefined>;
   findByTitle(title: string): Promise<Tool | undefined>;
-  findAllByTagName(tagTitle: string): Promise<Tool[] | null>;
+  findAllByTag(tagId: string): Promise<Tool[]>;
   deleteTool(data: Tool): Promise<void>;
 }

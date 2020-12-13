@@ -52,9 +52,19 @@ class CreateToolService {
       throw new AppError('Tool already exist');
     }
 
-    const savedTags = await this.tagRepository.create(tags);
+    const existentTags = await this.tagRepository.findAllByTitle(tags);
 
-    const tagsId = savedTags.map(tag => ({
+    const existentTagsTitle = existentTags.map(tag => tag.title);
+
+    const inexistentTags = tags.filter(
+      tag => !existentTagsTitle.find(tagTitle => tagTitle === tag),
+    );
+
+    const newTags = await this.tagRepository.create(inexistentTags);
+
+    const newListTags = [...existentTags, ...newTags];
+
+    const tagsId = newListTags.map(tag => ({
       tag_id: tag.id,
     }));
 

@@ -4,7 +4,7 @@ import usersRouter from '@modules/users/infra/http/routes/users.routes';
 
 const routes = Router();
 
-routes.use('/tools', toolsRouter);
 routes.use('/users', usersRouter);
+routes.use('/tools', toolsRouter);
 
 export default routes;

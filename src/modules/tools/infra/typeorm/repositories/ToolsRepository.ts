@@ -31,12 +31,12 @@ class ToolsRepository implements IToolsRepository {
     return tool;
   }
 
-  public async findAll(): Promise<Tool[] | null> {
+  public async findAll(): Promise<Tool[]> {
     const tools = await this.ormRepositoty.find({
       relations: ['tools_tags', 'tools_tags.tag', 'user'],
     });
 
-    return tools || null;
+    return tools;
   }
 
   public async findById(id: string): Promise<Tool | undefined> {
@@ -57,17 +57,16 @@ class ToolsRepository implements IToolsRepository {
     return tool;
   }
 
-  public async findAllByTagName(tagTitle: string): Promise<Tool[] | null> {
+  public async findAllByTag(tagId: string): Promise<Tool[]> {
     const tools = await this.ormRepositoty.find({
       relations: ['tools_tags', 'tools_tags.tag'],
     });
 
-    const filteredTools = tools.filter(({ tools_tags }) => {
-      const tool = tools_tags.find(({ tag }) => tag.title === tagTitle);
-      return tool;
-    });
+    const filteredTools = tools.filter(({ tools_tags }) =>
+      tools_tags.find(({ tag_id }) => tag_id === tagId),
+    );
 
-    return filteredTools || null;
+    return filteredTools;
   }
 
   public async deleteTool(tool: Tool): Promise<void> {
