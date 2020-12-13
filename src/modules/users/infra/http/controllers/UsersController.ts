@@ -9,13 +9,13 @@ export default class UsersController {
 
       const createUser = new CreateUserService();
 
-      const tool = await createUser.execute({
+      const user = await createUser.execute({
         name,
         email,
         password,
       });
 
-      return response.json(tool);
+      return response.json(user);
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
