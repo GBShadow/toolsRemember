@@ -1,6 +1,13 @@
 import AppError from '@shared/errors/AppError';
+import authConfig from '@config/auth';
 import { verify } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
+
+interface TokenPayLoad {
+  iat: number;
+  exp: number;
+  sub: string;
+}
 
 export default function ensureAuthenticate(
   request: Request,
@@ -15,5 +22,19 @@ export default function ensureAuthenticate(
 
   const [, token] = authHeader.split(' ');
 
-  const decoded = verify(token, 'hashMD5');
+  const { secret } = authConfig.jwt;
+
+  try {
+    const decoded = verify(token, secret);
+
+    const { sub } = decoded as TokenPayLoad;
+
+    request.user = {
+      id: sub,
+    };
+
+    return next();
+  } catch {
+    throw new AppError('Invalid JWT token');
+  }
 }

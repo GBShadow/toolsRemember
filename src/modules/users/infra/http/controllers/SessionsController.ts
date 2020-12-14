@@ -16,7 +16,7 @@ export default class SessionsController {
 
       delete user.password;
 
-      return response.json({ user, token });
+      return response.status(201).json({ user, token });
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }

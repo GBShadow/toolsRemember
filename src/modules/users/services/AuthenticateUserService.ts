@@ -1,6 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import authConfig from '@config/auth';
 import User from '../infra/typeorm/entities/User';
 import UsersRepository from '../infra/typeorm/repositories/UsersRepository';
 import IUsersRepository from '../repositories/IUsersRepository';
@@ -35,9 +36,11 @@ class AuthenticateUserService {
       throw new AppError('Incorrect email/password combination.');
     }
 
-    const token = sign({}, 'hashMD5', {
+    const { secret, expiresIn } = authConfig.jwt;
+
+    const token = sign({}, secret, {
       subject: user.id,
-      expiresIn: '1d',
+      expiresIn,
     });
 
     return {

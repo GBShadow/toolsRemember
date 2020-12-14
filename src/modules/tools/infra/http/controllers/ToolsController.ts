@@ -20,7 +20,7 @@ export default class ToolsController {
         user_id,
       });
 
-      return response.json(tool);
+      return response.status(201).json(tool);
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
@@ -41,6 +41,7 @@ export default class ToolsController {
 
   public async list(request: Request, response: Response): Promise<Response> {
     try {
+      console.log(request.user);
       const filter = request.query;
       const tag = filter.tag as string;
 
