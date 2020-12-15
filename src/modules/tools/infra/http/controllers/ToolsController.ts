@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import FindToolService from '@modules/tools/services/FindToolService';
-import FindToolsByTagService from '@modules/tools/services/FindToolsByTagService';
+import FindToolsByTagService from '@modules/tools/services/ListToolsByTagService';
 import CreateToolService from '@modules/tools/services/CreateToolService';
 import DeleteToolService from '@modules/tools/services/DeleteToolService';
 
