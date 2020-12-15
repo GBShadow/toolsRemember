@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 
 import CreateUserService from '@modules/users/services/CreateUserService';
 
+import { classToClass } from 'class-transformer';
+
 export default class UsersController {
   public async create(request: Request, response: Response): Promise<Response> {
     try {
@@ -15,7 +17,7 @@ export default class UsersController {
         password,
       });
 
-      return response.status(201).json(user);
+      return response.status(201).json(classToClass(user));
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }

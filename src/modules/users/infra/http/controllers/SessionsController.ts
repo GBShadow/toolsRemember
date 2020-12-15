@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 
@@ -14,9 +15,7 @@ export default class SessionsController {
         password,
       });
 
-      delete user.password;
-
-      return response.status(201).json({ user, token });
+      return response.status(201).json({ user: classToClass(user), token });
     } catch (err) {
       return response.status(400).json({ error: err.message });
     }
