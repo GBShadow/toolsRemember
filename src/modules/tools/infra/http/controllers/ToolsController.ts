@@ -8,7 +8,8 @@ import DeleteToolService from '@modules/tools/services/DeleteToolService';
 export default class ToolsController {
   public async create(request: Request, response: Response): Promise<Response> {
     try {
-      const { title, link, description, tags, user_id } = request.body;
+      const user_id = request.user.id;
+      const { title, link, description, tags } = request.body;
 
       const createTool = new CreateToolService();
 
@@ -28,10 +29,11 @@ export default class ToolsController {
 
   public async show(request: Request, response: Response): Promise<Response> {
     try {
+      const user_id = request.user.id;
       const { id } = request.params;
       const findTool = new FindToolService();
 
-      const tool = await findTool.execute({ id });
+      const tool = await findTool.execute({ user_id, id });
 
       return response.json(tool);
     } catch (err) {
@@ -42,12 +44,13 @@ export default class ToolsController {
   public async list(request: Request, response: Response): Promise<Response> {
     try {
       console.log(request.user);
+      const user_id = request.user.id;
       const filter = request.query;
       const tag = filter.tag as string;
 
       const findToolByTag = new FindToolsByTagService();
 
-      const tools = await findToolByTag.execute({ tag });
+      const tools = await findToolByTag.execute({ user_id, tag });
 
       return response.json(tools);
     } catch (err) {

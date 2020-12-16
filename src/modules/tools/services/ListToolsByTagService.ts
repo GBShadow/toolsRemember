@@ -7,6 +7,7 @@ import ITagsRepository from '../repositories/ITagsRepository';
 import IToolsRepository from '../repositories/IToolsRepository';
 
 interface IRequest {
+  user_id: string;
   tag: string | null;
 }
 
@@ -21,9 +22,9 @@ class FindToolService {
     this.tagRepository = new TagsRepository();
   }
 
-  public async execute({ tag }: IRequest): Promise<Tool[]> {
+  public async execute({ user_id, tag }: IRequest): Promise<Tool[]> {
     if (!tag) {
-      const tools = await this.toolRepository.findAll();
+      const tools = await this.toolRepository.findAll(user_id);
 
       return tools;
     }
@@ -34,7 +35,9 @@ class FindToolService {
       throw new AppError('Tag does not exist.');
     }
 
-    const tools = await this.toolRepository.findAllByTag(tagExist.id);
+    const tagId = tagExist.id;
+
+    const tools = await this.toolRepository.findAllByTag({ user_id, tagId });
 
     return tools;
   }
