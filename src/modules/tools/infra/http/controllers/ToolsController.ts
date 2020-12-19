@@ -43,7 +43,6 @@ export default class ToolsController {
 
   public async list(request: Request, response: Response): Promise<Response> {
     try {
-      console.log(request.user);
       const user_id = request.user.id;
       const filter = request.query;
       const tag = filter.tag as string;
@@ -60,11 +59,12 @@ export default class ToolsController {
 
   public async delete(request: Request, response: Response): Promise<Response> {
     try {
+      const user_id = request.user.id;
       const { id } = request.params;
 
       const deleteTool = new DeleteToolService();
 
-      await deleteTool.execute(id);
+      await deleteTool.execute({ user_id, id });
 
       return response.status(204).send();
     } catch (err) {

@@ -2,6 +2,11 @@ import AppError from '@shared/errors/AppError';
 import IToolsRepository from '../repositories/IToolsRepository';
 import ToolsRepository from '../infra/typeorm/repositories/ToolsRepository';
 
+interface IRequest {
+  user_id: string;
+  id: string;
+}
+
 class DeleteToolService {
   private toolRepository: IToolsRepository;
 
@@ -9,8 +14,8 @@ class DeleteToolService {
     this.toolRepository = new ToolsRepository();
   }
 
-  public async execute(id: string): Promise<void> {
-    const tool = await this.toolRepository.findById(id);
+  public async execute({ user_id, id }: IRequest): Promise<void> {
+    const tool = await this.toolRepository.findById({ user_id, id });
 
     if (!tool) {
       throw new AppError('Tool does not exist');

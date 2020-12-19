@@ -49,8 +49,11 @@ class ToolsRepository implements IToolsRepository {
     user_id,
     id,
   }: IFindByIdDTO): Promise<Tool | undefined> {
-    const tool = await this.ormRepositoty.findOne(id, {
-      where: user_id,
+    const tool = await this.ormRepositoty.findOne({
+      where: {
+        user_id,
+        id,
+      },
       relations: ['tools_tags', 'tools_tags.tag', 'user'],
     });
 
