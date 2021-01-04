@@ -5,13 +5,25 @@ import FindToolsByTagService from '@modules/tools/services/ListToolsByTagService
 import CreateToolService from '@modules/tools/services/CreateToolService';
 import DeleteToolService from '@modules/tools/services/DeleteToolService';
 
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+import ToolsRepository from '../../typeorm/repositories/ToolsRepository';
+import TagsRepository from '../../typeorm/repositories/TagsRepository';
+
+const toolRepository = new ToolsRepository();
+const userRepository = new UsersRepository();
+const tagRepository = new TagsRepository();
+
 export default class ToolsController {
   public async create(request: Request, response: Response): Promise<Response> {
     try {
       const user_id = request.user.id;
       const { title, link, description, tags } = request.body;
 
-      const createTool = new CreateToolService();
+      const createTool = new CreateToolService(
+        toolRepository,
+        userRepository,
+        tagRepository,
+      );
 
       const tool = await createTool.execute({
         title,
@@ -31,7 +43,7 @@ export default class ToolsController {
     try {
       const user_id = request.user.id;
       const { id } = request.params;
-      const findTool = new FindToolService();
+      const findTool = new FindToolService(toolRepository);
 
       const tool = await findTool.execute({ user_id, id });
 
@@ -47,7 +59,10 @@ export default class ToolsController {
       const filter = request.query;
       const tag = filter.tag as string;
 
-      const findToolByTag = new FindToolsByTagService();
+      const findToolByTag = new FindToolsByTagService(
+        toolRepository,
+        tagRepository,
+      );
 
       const tools = await findToolByTag.execute({ user_id, tag });
 
@@ -62,7 +77,7 @@ export default class ToolsController {
       const user_id = request.user.id;
       const { id } = request.params;
 
-      const deleteTool = new DeleteToolService();
+      const deleteTool = new DeleteToolService(toolRepository);
 
       await deleteTool.execute({ user_id, id });
 

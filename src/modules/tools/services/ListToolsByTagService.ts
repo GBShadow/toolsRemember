@@ -1,8 +1,6 @@
 import AppError from '@shared/errors/AppError';
 import Tool from '../infra/typeorm/entities/Tool';
-import TagsRepository from '../infra/typeorm/repositories/TagsRepository';
 
-import ToolsRepository from '../infra/typeorm/repositories/ToolsRepository';
 import ITagsRepository from '../repositories/ITagsRepository';
 import IToolsRepository from '../repositories/IToolsRepository';
 
@@ -12,14 +10,17 @@ interface IRequest {
 }
 
 class FindToolService {
-  private toolRepository: IToolsRepository;
+  private toolRepository;
 
-  private tagRepository: ITagsRepository;
+  private tagRepository;
 
-  constructor() {
-    this.toolRepository = new ToolsRepository();
+  constructor(
+    toolRepository: IToolsRepository,
+    tagRepository: ITagsRepository,
+  ) {
+    this.toolRepository = toolRepository;
 
-    this.tagRepository = new TagsRepository();
+    this.tagRepository = tagRepository;
   }
 
   public async execute({ user_id, tag }: IRequest): Promise<Tool[]> {

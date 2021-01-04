@@ -1,7 +1,6 @@
 import { hash } from 'bcryptjs';
 import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
-import UsersRepository from '../infra/typeorm/repositories/UsersRepository';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 interface Request {
@@ -11,10 +10,10 @@ interface Request {
 }
 
 class CreateUserService {
-  private usersRepository: IUsersRepository;
+  private usersRepository;
 
-  constructor() {
-    this.usersRepository = new UsersRepository();
+  constructor(usersRepository: IUsersRepository) {
+    this.usersRepository = usersRepository;
   }
 
   public async execute({ name, email, password }: Request): Promise<User> {

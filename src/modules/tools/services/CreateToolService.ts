@@ -1,14 +1,10 @@
 import AppError from '@shared/errors/AppError';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
-import Tool from '../infra/typeorm/entities/Tool';
-
-import ToolsRepository from '../infra/typeorm/repositories/ToolsRepository';
-import TagsRepository from '../infra/typeorm/repositories/TagsRepository';
-
 import IToolsRepository from '../repositories/IToolsRepository';
 import ITagsRepository from '../repositories/ITagsRepository';
+
+import Tool from '../infra/typeorm/entities/Tool';
 
 interface IRequest {
   user_id: string;
@@ -19,18 +15,22 @@ interface IRequest {
 }
 
 class CreateToolService {
-  private toolRepository: IToolsRepository;
+  private toolRepository;
 
-  private userRepository: IUsersRepository;
+  private userRepository;
 
-  private tagRepository: ITagsRepository;
+  private tagRepository;
 
-  constructor() {
-    this.toolRepository = new ToolsRepository();
+  constructor(
+    toolRepository: IToolsRepository,
+    userRepository: IUsersRepository,
+    tagRepository: ITagsRepository,
+  ) {
+    this.toolRepository = toolRepository;
 
-    this.userRepository = new UsersRepository();
+    this.userRepository = userRepository;
 
-    this.tagRepository = new TagsRepository();
+    this.tagRepository = tagRepository;
   }
 
   public async execute({
@@ -46,7 +46,10 @@ class CreateToolService {
       throw new AppError('User does not exist');
     }
 
-    const alreadyExistTool = await this.toolRepository.findByTitle(title);
+    const alreadyExistTool = await this.toolRepository.findByTitle({
+      user_id,
+      title,
+    });
 
     if (alreadyExistTool) {
       throw new AppError('Tool already exist');

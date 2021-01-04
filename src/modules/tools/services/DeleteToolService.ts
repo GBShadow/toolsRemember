@@ -1,6 +1,5 @@
 import AppError from '@shared/errors/AppError';
 import IToolsRepository from '../repositories/IToolsRepository';
-import ToolsRepository from '../infra/typeorm/repositories/ToolsRepository';
 
 interface IRequest {
   user_id: string;
@@ -10,8 +9,8 @@ interface IRequest {
 class DeleteToolService {
   private toolRepository: IToolsRepository;
 
-  constructor() {
-    this.toolRepository = new ToolsRepository();
+  constructor(toolRepository: IToolsRepository) {
+    this.toolRepository = toolRepository;
   }
 
   public async execute({ user_id, id }: IRequest): Promise<void> {

@@ -3,7 +3,6 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 import User from '../infra/typeorm/entities/User';
-import UsersRepository from '../infra/typeorm/repositories/UsersRepository';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
@@ -17,10 +16,10 @@ interface IResponse {
 }
 
 class AuthenticateUserService {
-  private usersRepository: IUsersRepository;
+  private usersRepository;
 
-  constructor() {
-    this.usersRepository = new UsersRepository();
+  constructor(usersRepository: IUsersRepository) {
+    this.usersRepository = usersRepository;
   }
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
