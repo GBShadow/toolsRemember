@@ -5,10 +5,10 @@ import User from '../entities/User';
 
 @EntityRepository(User)
 class UsersRepository implements IUsersRepository {
-  private ormRepositoty: Repository<User>;
+  private ormRepository: Repository<User>;
 
   constructor() {
-    this.ormRepositoty = getRepository(User);
+    this.ormRepository = getRepository(User);
   }
 
   public async create({
@@ -16,19 +16,19 @@ class UsersRepository implements IUsersRepository {
     email,
     password,
   }: ICreateUserDTO): Promise<User> {
-    const user = this.ormRepositoty.create({
+    const user = this.ormRepository.create({
       name,
       email,
       password,
     });
 
-    await this.ormRepositoty.save(user);
+    await this.ormRepository.save(user);
 
     return user;
   }
 
-  public async findByTagId(user_id: string): Promise<User | undefined> {
-    const user = await this.ormRepositoty.findOne({
+  public async findById(user_id: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
       where: {
         id: user_id,
       },
@@ -38,7 +38,7 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
-    const user = await this.ormRepositoty.findOne({
+    const user = await this.ormRepository.findOne({
       where: {
         email,
       },

@@ -4,36 +4,36 @@ import Tag from '../entities/Tag';
 
 @EntityRepository(Tag)
 class TagsRepository implements ITagsRepository {
-  private ormRepositoty: Repository<Tag>;
+  private ormRepository: Repository<Tag>;
 
   constructor() {
-    this.ormRepositoty = getRepository(Tag);
+    this.ormRepository = getRepository(Tag);
   }
 
-  public async create(tags: string[]): Promise<Tag[]> {
-    const savedTags = tags.map((title: string) =>
-      this.ormRepositoty.create({ title }),
+  public async create(tagsTitle: string[]): Promise<Tag[]> {
+    const savedTags = tagsTitle.map((title: string) =>
+      this.ormRepository.create({ title }),
     );
 
-    await this.ormRepositoty.save(savedTags);
+    await this.ormRepository.save(savedTags);
 
     return savedTags;
   }
 
-  public async findByTitle(tag: string): Promise<Tag | undefined> {
-    const existingTag = await this.ormRepositoty.findOne({
+  public async findByTitle(tagTitle: string): Promise<Tag | undefined> {
+    const existingTag = await this.ormRepository.findOne({
       where: {
-        title: tag,
+        title: tagTitle,
       },
     });
 
     return existingTag;
   }
 
-  public async findAllByTitle(tags: string[]): Promise<Tag[]> {
-    const existingTag = await this.ormRepositoty.find({
+  public async findAllByTitle(tagsTitle: string[]): Promise<Tag[]> {
+    const existingTag = await this.ormRepository.find({
       where: {
-        title: In(tags),
+        title: In(tagsTitle),
       },
     });
 
