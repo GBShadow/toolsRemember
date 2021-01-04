@@ -1,9 +1,12 @@
 import { uuid } from 'uuidv4';
+
 import IToolsRepository from '@modules/tools/repositories/IToolsRepository';
+
+import ICreateToolDTO from '@modules/tools/dtos/ICreateToolDTO';
 import IFindByIdDTO from '@modules/tools/dtos/IFindByIdDTO';
 import IFindByTitleDTO from '@modules/tools/dtos/IFindByTitleDTO';
 import IFindByTagDTO from '@modules/tools/dtos/IFindByTagDTO';
-import ICreateToolDTO from '@modules/tools/dtos/ICreateToolDTO';
+
 import Tool from '../../infra/typeorm/entities/Tool';
 
 class FakeToolsRepository implements IToolsRepository {
@@ -19,7 +22,7 @@ class FakeToolsRepository implements IToolsRepository {
     const tool = new Tool();
 
     Object.assign(tool, {
-      id: uuid,
+      id: uuid(),
       user,
       title,
       link,
