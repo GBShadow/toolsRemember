@@ -40,7 +40,7 @@ class CreateToolService {
     description,
     tags,
   }: IRequest): Promise<Tool> {
-    const user = await this.userRepository.findByTagId(user_id);
+    const user = await this.userRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('User does not exist');
