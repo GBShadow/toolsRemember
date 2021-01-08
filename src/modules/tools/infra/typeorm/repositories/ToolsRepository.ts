@@ -8,10 +8,10 @@ import Tool from '../entities/Tool';
 
 @EntityRepository(Tool)
 class ToolsRepository implements IToolsRepository {
-  private ormRepositoty: Repository<Tool>;
+  private ormRepository: Repository<Tool>;
 
   constructor() {
-    this.ormRepositoty = getRepository(Tool);
+    this.ormRepository = getRepository(Tool);
   }
 
   public async create({
@@ -21,7 +21,7 @@ class ToolsRepository implements IToolsRepository {
     description,
     tags,
   }: ICreateToolDTO): Promise<Tool> {
-    const tool = this.ormRepositoty.create({
+    const tool = this.ormRepository.create({
       user,
       title,
       link,
@@ -29,13 +29,13 @@ class ToolsRepository implements IToolsRepository {
       tools_tags: tags,
     });
 
-    await this.ormRepositoty.save(tool);
+    await this.ormRepository.save(tool);
 
     return tool;
   }
 
   public async findAll(user_id: string): Promise<Tool[]> {
-    const tools = await this.ormRepositoty.find({
+    const tools = await this.ormRepository.find({
       where: {
         user_id,
       },
@@ -49,7 +49,7 @@ class ToolsRepository implements IToolsRepository {
     user_id,
     id,
   }: IFindByIdDTO): Promise<Tool | undefined> {
-    const tool = await this.ormRepositoty.findOne({
+    const tool = await this.ormRepository.findOne({
       where: {
         user_id,
         id,
@@ -64,7 +64,7 @@ class ToolsRepository implements IToolsRepository {
     user_id,
     title,
   }: IFindByTitleDTO): Promise<Tool | undefined> {
-    const tool = await this.ormRepositoty.findOne({
+    const tool = await this.ormRepository.findOne({
       where: {
         user_id,
         title,
@@ -78,7 +78,7 @@ class ToolsRepository implements IToolsRepository {
     user_id,
     tagId,
   }: IFindByTagDTO): Promise<Tool[]> {
-    const tools = await this.ormRepositoty.find({
+    const tools = await this.ormRepository.find({
       where: { user_id },
       relations: ['tools_tags', 'tools_tags.tag'],
     });
@@ -91,7 +91,7 @@ class ToolsRepository implements IToolsRepository {
   }
 
   public async deleteTool(tool: Tool): Promise<void> {
-    await this.ormRepositoty.remove(tool);
+    await this.ormRepository.remove(tool);
   }
 }
 

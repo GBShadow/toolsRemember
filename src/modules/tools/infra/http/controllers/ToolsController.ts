@@ -77,7 +77,7 @@ export default class ToolsController {
       const user_id = request.user.id;
       const { id } = request.params;
 
-      const deleteTool = new DeleteToolService(toolRepository);
+      const deleteTool = new DeleteToolService(toolRepository, userRepository);
 
       await deleteTool.execute({ user_id, id });
 
