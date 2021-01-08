@@ -48,7 +48,7 @@ class FakeToolsRepository implements IToolsRepository {
     id,
   }: IFindByIdDTO): Promise<Tool | undefined> {
     const findTool = this.tools.find(tool => {
-      return tool.user_id === user_id && tool.id === id;
+      return tool.user.id === user_id && tool.id === id;
     });
 
     return findTool;
@@ -59,7 +59,7 @@ class FakeToolsRepository implements IToolsRepository {
     title,
   }: IFindByTitleDTO): Promise<Tool | undefined> {
     const findTool = this.tools.find(tool => {
-      return tool.user_id === user_id && tool.title === title;
+      return tool.user.id === user_id && tool.title === title;
     });
 
     return findTool;
