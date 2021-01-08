@@ -1,4 +1,5 @@
 import AppError from '@shared/errors/AppError';
+import IUserRepository from '@modules/users/repositories/IUsersRepository';
 import IToolsRepository from '../repositories/IToolsRepository';
 
 interface IRequest {
@@ -7,13 +8,25 @@ interface IRequest {
 }
 
 class DeleteToolService {
-  private toolRepository: IToolsRepository;
+  private toolRepository;
 
-  constructor(toolRepository: IToolsRepository) {
+  private userRepository;
+
+  constructor(
+    toolRepository: IToolsRepository,
+    userRepository: IUserRepository,
+  ) {
     this.toolRepository = toolRepository;
+    this.userRepository = userRepository;
   }
 
   public async execute({ user_id, id }: IRequest): Promise<void> {
+    const user = await this.userRepository.findById(user_id);
+
+    if (!user) {
+      throw new AppError('User does not exist');
+    }
+
     const tool = await this.toolRepository.findById({ user_id, id });
 
     if (!tool) {
