@@ -49,7 +49,7 @@ describe('FindToolService', () => {
     ).toMatchObject(tool);
   });
 
-  it('should not be able a list tools with a invalid user', async () => {
+  it('should not be able find a tool with a invalid user', async () => {
     const user = await fakeUserRepository.create({
       name: 'John Doe',
       email: 'john@john.com',
@@ -72,7 +72,7 @@ describe('FindToolService', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should not be able a list tool if does not exist', async () => {
+  it('should not be able find a tool if does not exist', async () => {
     const user = await fakeUserRepository.create({
       name: 'John Doe',
       email: 'john@john.com',
