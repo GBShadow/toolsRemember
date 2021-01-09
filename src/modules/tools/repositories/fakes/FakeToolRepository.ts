@@ -37,7 +37,7 @@ class FakeToolsRepository implements IToolsRepository {
 
   public async findAll(user_id: string): Promise<Tool[]> {
     const findAllToolsOfUser = this.tools.filter(
-      tool => tool.user_id === user_id,
+      tool => tool.user.id === user_id,
     );
 
     return findAllToolsOfUser;
@@ -71,7 +71,7 @@ class FakeToolsRepository implements IToolsRepository {
   }: IFindByTagDTO): Promise<Tool[]> {
     const findToolsByTag = this.tools.filter(tool => {
       return (
-        tool.user_id === user_id &&
+        tool.user.id === user_id &&
         tool.tools_tags.find(tool_tag => tool_tag.tag_id === tagId)
       );
     });
