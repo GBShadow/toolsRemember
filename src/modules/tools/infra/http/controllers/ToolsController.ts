@@ -43,7 +43,7 @@ export default class ToolsController {
     try {
       const user_id = request.user.id;
       const { id } = request.params;
-      const findTool = new FindToolService(toolRepository);
+      const findTool = new FindToolService(toolRepository, userRepository);
 
       const tool = await findTool.execute({ user_id, id });
 
@@ -61,6 +61,7 @@ export default class ToolsController {
 
       const findToolByTag = new FindToolsByTagService(
         toolRepository,
+        userRepository,
         tagRepository,
       );
 

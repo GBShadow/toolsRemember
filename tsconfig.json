@@ -6,6 +6,7 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
+    "allowJs": true,
     "paths": {
       "@modules/*": ["modules/*"],
       "@config/*": ["config/*"],
@@ -14,7 +15,6 @@
     "esModuleInterop": true ,
     "experimentalDecorators": true ,
     "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   }
 }

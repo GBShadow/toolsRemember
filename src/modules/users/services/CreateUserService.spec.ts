@@ -11,8 +11,8 @@ describe('CreateUserService', () => {
     createUser = new CreateUserService(fakeUserRepository);
   });
 
-  it('should be able to create a new tool', async () => {
-    const user = await fakeUserRepository.create({
+  it('should be able to create a new user', async () => {
+    const user = await createUser.execute({
       name: 'John Doe',
       email: 'john@john.com',
       password: '123456',

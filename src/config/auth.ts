@@ -1,6 +1,7 @@
 export default {
   jwt: {
-    secret: 'hashMD5',
+    privateKey: process.env.PRIVATE_KEY || 'hashMD5',
+    publicKey: process.env.PUBLIC_KEY,
     expiresIn: '1d',
   },
 };
