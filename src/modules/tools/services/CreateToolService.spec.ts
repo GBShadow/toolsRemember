@@ -1,5 +1,6 @@
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUserRepository';
 import AppError from '@shared/errors/AppError';
+import CreateUserService from '@modules/users/services/CreateUserService';
 import FakeTagsRepository from '../repositories/fakes/FakeTagRepository';
 import FakeToolRepository from '../repositories/fakes/FakeToolRepository';
 import CreateToolService from './CreateToolService';
@@ -8,12 +9,14 @@ let fakeToolRepository: FakeToolRepository;
 let fakeUserRepository: FakeUsersRepository;
 let fakeTagRepository: FakeTagsRepository;
 let createTool: CreateToolService;
+let createUser: CreateUserService;
 
 describe('CreateToolService', () => {
   beforeEach(() => {
     fakeToolRepository = new FakeToolRepository();
     fakeUserRepository = new FakeUsersRepository();
     fakeTagRepository = new FakeTagsRepository();
+    createUser = new CreateUserService(fakeUserRepository);
     createTool = new CreateToolService(
       fakeToolRepository,
       fakeUserRepository,

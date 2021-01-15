@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add @types/@hapi__joi -D
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add -D @types/v4
 
 PATH: 
   /home/gbshadow/.zinit/polaris/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,8 +14,8 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2f: Request "https://registry.yarnpkg.com/@types%2f" returned a 405
-      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66997:18)
+  Error: https://registry.yarnpkg.com/@types%2fv4: Not found
+      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66988:18)
       at Request.self.callback (/usr/share/yarn/lib/cli.js:140749:22)
       at Request.emit (events.js:315:20)
       at Request.<anonymous> (/usr/share/yarn/lib/cli.js:141721:10)
@@ -43,18 +43,20 @@ npm manifest:
       "pg": "^8.5.1",
       "reflect-metadata": "^0.1.13",
       "typeorm": "^0.2.29",
-      "uuidv4": "^6.2.5"
+      "uuidv4": "^6.2.5",
+      "v4": "^0.0.1"
     },
     "scripts": {
       "build": "tsc",
       "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
       "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-      "test": "jest"
+      "test": "jest  --setupFiles dotenv/config"
     },
     "devDependencies": {
       "@types/bcryptjs": "^2.4.2",
       "@types/cors": "^2.8.9",
       "@types/express": "^4.17.9",
+      "@types/hapi__joi": "^17.1.6",
       "@types/jest": "^26.0.19",
       "@types/jsonwebtoken": "^8.5.0",
       "@types/node": "^14.14.9",
@@ -726,6 +728,11 @@ Lockfile:
     integrity sha512-mWA/4zFQhfvOA8zWkXobwJvBD7vzcxgrOQ0J5CH1votGqdq9m7+FwtGaqyCZqC3NyyBkc9z4m+iry4LlqcMWJg==
     dependencies:
       "@types/node" "*"
+  
+  "@types/hapi__joi@^17.1.6":
+    version "17.1.6"
+    resolved "https://registry.yarnpkg.com/@types/hapi__joi/-/hapi__joi-17.1.6.tgz#b84663676aa9753c17183718338dd40ddcbd3754"
+    integrity sha512-y3A1MzNC0FmzD5+ys59RziE1WqKrL13nxtJgrSzjoO7boue5B7zZD2nZLPwrSuUviFjpKFQtgHYSvhDGfIE4jA==
   
   "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
     version "2.0.3"
@@ -3767,6 +3774,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
     integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
   
+  lodash@^3.10.0:
+    version "3.10.1"
+    resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+    integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
+  
   loud-rejection@^1.0.0:
     version "1.6.0"
     resolved "https://registry.yarnpkg.com/loud-rejection/-/loud-rejection-1.6.0.tgz#5b46f80147edee578870f086d04821cf998e551f"
@@ -5665,6 +5677,13 @@ Lockfile:
     dependencies:
       "@types/uuid" "8.3.0"
       uuid "8.3.1"
+  
+  v4@^0.0.1:
+    version "0.0.1"
+    resolved "https://registry.yarnpkg.com/v4/-/v4-0.0.1.tgz#d291f6cc971b6b226b413cc6e3d2ec77a760d41b"
+    integrity sha1-0pH2zJcbayJrQTzG49Lsd6dg1Bs=
+    dependencies:
+      lodash "^3.10.0"
   
   v8-compile-cache@^2.0.3:
     version "2.2.0"
