@@ -22,10 +22,10 @@ export default function ensureAuthenticate(
 
   const [, token] = authHeader.split(' ');
 
-  const { secret } = authConfig.jwt;
+  const { publicKey } = authConfig.jwt;
 
   try {
-    const decoded = verify(token, secret);
+    const decoded = verify(token, publicKey);
 
     const { sub } = decoded as TokenPayLoad;
 
