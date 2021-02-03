@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import Tool from '../infra/typeorm/entities/Tool';
@@ -10,24 +11,16 @@ interface IRequest {
   tag?: string;
 }
 
+@injectable()
 class ListToolsByTagService {
-  private toolRepository;
-
-  private userRepository;
-
-  private tagRepository;
-
   constructor(
-    toolRepository: IToolsRepository,
-    userRepository: IUsersRepository,
-    tagRepository: ITagsRepository,
-  ) {
-    this.toolRepository = toolRepository;
-
-    this.userRepository = userRepository;
-
-    this.tagRepository = tagRepository;
-  }
+    @inject('ToolsRepository')
+    private toolRepository: IToolsRepository,
+    @inject('UsersRepository')
+    private userRepository: IUsersRepository,
+    @inject('TagsRepository')
+    private tagRepository: ITagsRepository,
+  ) {}
 
   public async execute({ user_id, tag }: IRequest): Promise<Tool[]> {
     const user = await this.userRepository.findById(user_id);

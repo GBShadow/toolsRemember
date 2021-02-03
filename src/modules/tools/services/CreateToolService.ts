@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
@@ -14,24 +15,16 @@ interface IRequest {
   tags: string[];
 }
 
+@injectable()
 class CreateToolService {
-  private toolRepository;
-
-  private userRepository;
-
-  private tagRepository;
-
   constructor(
-    toolRepository: IToolsRepository,
-    userRepository: IUsersRepository,
-    tagRepository: ITagsRepository,
-  ) {
-    this.toolRepository = toolRepository;
-
-    this.userRepository = userRepository;
-
-    this.tagRepository = tagRepository;
-  }
+    @inject('ToolsRepository')
+    private toolRepository: IToolsRepository,
+    @inject('UsersRepository')
+    private userRepository: IUsersRepository,
+    @inject('TagsRepository')
+    private tagRepository: ITagsRepository,
+  ) {}
 
   public async execute({
     user_id,

@@ -1,6 +1,7 @@
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
-import IUserRepository from '@modules/users/repositories/IUsersRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IToolsRepository from '../repositories/IToolsRepository';
 
 import Tool from '../infra/typeorm/entities/Tool';
@@ -10,18 +11,14 @@ interface IRequest {
   id: string;
 }
 
+@injectable()
 class FindToolService {
-  private toolRepository;
-
-  private userRepository;
-
   constructor(
-    toolRepository: IToolsRepository,
-    userRepository: IUserRepository,
-  ) {
-    this.toolRepository = toolRepository;
-    this.userRepository = userRepository;
-  }
+    @inject('ToolsRepository')
+    private toolRepository: IToolsRepository,
+    @inject('UsersRepository')
+    private userRepository: IUsersRepository,
+  ) {}
 
   public async execute({ user_id, id }: IRequest): Promise<Tool | undefined> {
     const user = await this.userRepository.findById(user_id);

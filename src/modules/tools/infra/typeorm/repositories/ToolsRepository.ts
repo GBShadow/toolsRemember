@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, getRepository } from 'typeorm';
+import { Repository, getRepository } from 'typeorm';
 import IToolsRepository from '@modules/tools/repositories/IToolsRepository';
 import IFindByIdDTO from '@modules/tools/dtos/IFindByIdDTO';
 import IFindByTitleDTO from '@modules/tools/dtos/IFindByTitleDTO';
@@ -6,7 +6,6 @@ import IFindByTagDTO from '@modules/tools/dtos/IFindByTagDTO';
 import ICreateToolDTO from '../../../dtos/ICreateToolDTO';
 import Tool from '../entities/Tool';
 
-@EntityRepository(Tool)
 class ToolsRepository implements IToolsRepository {
   private ormRepository: Repository<Tool>;
 
